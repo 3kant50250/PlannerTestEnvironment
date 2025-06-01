@@ -1,0 +1,52 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: sqlserver
+    environment:
+      SA_PASSWORD: "Your_password123"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    volumes:
+      - mssql-data:/var/opt/mssql
+      - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - planner-net
+
+  plannerserver:
+    build:
+      context: ./src
+      dockerfile: PlannerServer/Dockerfile
+    container_name: plannerserver
+    depends_on:
+      - sqlserver
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=TestDb;User Id=sa;Password=Your_password123;
+    ports:
+      - "5000:80"
+    networks:
+      - planner-net
+
+  plannerclient:
+    build:
+      context: ./src
+      dockerfile: PlannerClient/Dockerfile
+    container_name: plannerclient
+    depends_on:
+      - sqlserver
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=TestDb;User Id=sa;Password=Your_password123;
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    networks:
+      - planner-net
+
+volumes:
+  mssql-data:
+
+networks:
+  planner-net:
+    driver: bridge
