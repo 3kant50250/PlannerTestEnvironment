@@ -1,6 +1,6 @@
 services:
   sqlserver:
-    image: mcr.microsoft.com/mssql/server:2019-latest
+    image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: sqlserver
     environment:
       SA_PASSWORD: "Your_password123"
@@ -13,34 +13,21 @@ services:
     networks:
       - planner-net
 
-  plannerserver:
+  plannerclient:
     build:
-      context: ./src
-      dockerfile: PlannerServer/Dockerfile
-    container_name: plannerserver
-    depends_on:
-      - sqlserver
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=TestDb;User Id=sa;Password=Your_password123;
+      context: .
+      dockerfile: src/PlannerClient/Dockerfile
     ports:
-      - "5000:80"
+      - "8080:8080"
     networks:
       - planner-net
 
-  plannerclient:
+  plannerserver:
     build:
-      context: ./src
-      dockerfile: PlannerClient/Dockerfile
-    container_name: plannerclient
-    depends_on:
-      - sqlserver
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=TestDb;User Id=sa;Password=Your_password123;
+      context: .
+      dockerfile: src/PlannerServer/Dockerfile
     ports:
-      - "8080:8080"
-      - "8081:8081"
+      - "5000:80"
     networks:
       - planner-net
 
