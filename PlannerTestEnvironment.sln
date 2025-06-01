@@ -22,6 +22,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{9F8A7C14-7F7A-42DF-BCD3-988D1AB6B692}"
 	ProjectSection(SolutionItems) = preProject
 		ci.yml = ci.yml
+		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlannerServer", "src\PlannerServer\PlannerServer.csproj", "{A87216D6-44E7-4BBD-8F45-1895115C2802}"
