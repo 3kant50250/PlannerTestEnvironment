@@ -7,9 +7,24 @@ services:
       ACCEPT_EULA: "Y"
     ports:
       - "1433:1433"
-    volumes:
-      - mssql-data:/var/opt/mssql
-      - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    #volumes:
+    #  - mssql-data:/var/opt/mssql
+    #  - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - planner-net
+
+  sqlready:
+    image: mcr.microsoft.com/mssql-tools
+    depends_on:
+      - sqlserver
+    entrypoint: |
+      bash -c "echo 'Waiting for SQL Server to accept connections...';
+        for i in $(seq 1 30); do
+          /opt/mssql-tools/bin/sqlcmd -S sqlserver -U sa -P 'Your_password123' -Q 'SELECT 1' && exit 0
+          echo 'SQL not ready, retrying ('$i')...' && sleep 5
+        done
+        echo 'SQL Server did not become ready in time.' && exit 1"     
+
     networks:
       - planner-net
 
@@ -28,6 +43,9 @@ services:
       dockerfile: src/PlannerServer/Dockerfile
     ports:
       - "5000:80"
+    depends_on:
+      - sqlserver
+      - sqlready
     networks:
       - planner-net
 
