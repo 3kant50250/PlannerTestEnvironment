@@ -13,4 +13,6 @@ RUN dotnet publish -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=build /app/publish .
-ENTRYPOINT ["dotnet", "PlannerServer.dll"]
+COPY wait-for-db.sh .
+RUN chmod +x wait-for-db.sh
+ENTRYPOINT ["./wait-for-db.sh"]

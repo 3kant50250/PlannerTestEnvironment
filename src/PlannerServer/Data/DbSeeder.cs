@@ -44,11 +44,11 @@ public static class DbSeeder
                 if (!context.Students.Any())
                 {
                     context.Students.AddRange(
-                        new Student { Name = "Nikolaj Rasmussen", Unilogin = "niko2587", DepartmentId = 1, StartDate = DateTime.Now, GraduationDate = DateTime.Now.AddYears(2), MunicipalityId = 1, Birthdate = DateTime.Parse("1996-09-30"), SerialNumber = "8339" },
-                        new Student { Name = "Albert Pedersen", Unilogin = "albe3569", DepartmentId = 2, StartDate = DateTime.Now, GraduationDate = DateTime.Now.AddYears(2), MunicipalityId = 1, Birthdate = DateTime.Parse("1997-01-06"), SerialNumber = "5841" },
-                        new Student { Name = "Laura Mortensen", Unilogin = "laur4680", DepartmentId = 1, StartDate = DateTime.Now, GraduationDate = DateTime.Now.AddYears(2), MunicipalityId = 1, Birthdate = DateTime.Parse("1997-08-25"), SerialNumber = "1847" },
-                        new Student { Name = "Sebastian Eriksen", Unilogin = "seba9870", DepartmentId = 2, StartDate = DateTime.Now, GraduationDate = DateTime.Now.AddYears(2), MunicipalityId = 1, Birthdate = DateTime.Parse("1996-02-15"), SerialNumber = "6725" },
-                        new Student { Name = "Julie Kristensen", Unilogin = "juli5698", DepartmentId = 1, StartDate = DateTime.Now, GraduationDate = DateTime.Now.AddYears(2), MunicipalityId = 1, Birthdate = DateTime.Parse("1996-07-23"), SerialNumber = "8133" }
+                        new Student { Name = "Nikolaj Rasmussen", Unilogin = "niko2587", DepartmentId = 1, StartDate = DateTime.Now, GraduationDate = DateTime.Now.AddYears(2), MunicipalityId = 1, Birthdate = DateTime.Parse("1996-09-30"), SerialNumber = "8339", IdFromUms = 1, UmsActivity = "Active" },
+                        new Student { Name = "Albert Pedersen", Unilogin = "albe3569", DepartmentId = 2, StartDate = DateTime.Now, GraduationDate = DateTime.Now.AddYears(2), MunicipalityId = 1, Birthdate = DateTime.Parse("1997-01-06"), SerialNumber = "5841", IdFromUms = 2, UmsActivity = "Active" },
+                        new Student { Name = "Laura Mortensen", Unilogin = "laur4680", DepartmentId = 1, StartDate = DateTime.Now, GraduationDate = DateTime.Now.AddYears(2), MunicipalityId = 1, Birthdate = DateTime.Parse("1997-08-25"), SerialNumber = "1847", IdFromUms = 3, UmsActivity = "Active" },
+                        new Student { Name = "Sebastian Eriksen", Unilogin = "seba9870", DepartmentId = 2, StartDate = DateTime.Now, GraduationDate = DateTime.Now.AddYears(2), MunicipalityId = 1, Birthdate = DateTime.Parse("1996-02-15"), SerialNumber = "6725", IdFromUms = 4, UmsActivity = "Active" },
+                        new Student { Name = "Julie Kristensen", Unilogin = "juli5698", DepartmentId = 1, StartDate = DateTime.Now, GraduationDate = DateTime.Now.AddYears(2), MunicipalityId = 1, Birthdate = DateTime.Parse("1996-07-23"), SerialNumber = "8133", IdFromUms = 5, UmsActivity = "Active" }
                     );
 
                     context.SaveChanges();

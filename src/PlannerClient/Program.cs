@@ -1,7 +1,15 @@
+using PlannerClient.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+builder.Services.AddHttpClient("PlannerApi", client =>
+{
+    client.BaseAddress = new Uri("http://plannerserver:80"); // Name from docker-compose
+});
+
 
 var app = builder.Build();
 

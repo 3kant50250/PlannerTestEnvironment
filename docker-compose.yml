@@ -42,7 +42,7 @@ services:
       context: .
       dockerfile: src/PlannerServer/Dockerfile
     ports:
-      - "5000:80"
+      - "5000:8080"
     depends_on:
       - sqlserver
       - sqlready
