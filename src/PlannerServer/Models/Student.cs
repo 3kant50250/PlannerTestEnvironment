@@ -15,16 +15,6 @@ namespace PlannerServer.Models
             PlannedActivities = new HashSet<PlannedActivity>();
         }
 
-        //public bool IsAspIN => this.IsAspIN();
-
-        //public bool IsEnrolled => this.IsActiveEnrolled();
-
-        //public string SemesterText => !IsEnrolled ? "0. sem" : this.GetCurrentSemester().ToString() + ". sem.";
-
-        //public string NameSemesterText => $"{Name}, {SemesterText}";
-
-        //public string NameSemesterDepartmentText => $"{NameSemesterText}, {Department.Name}";
-
         public int StudentId { get; set; }
 
         [Required]
