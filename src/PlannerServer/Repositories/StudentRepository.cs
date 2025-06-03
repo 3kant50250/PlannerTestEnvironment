@@ -10,10 +10,10 @@ namespace PlannerServer.Repositories
 {
     public class StudentRepository : IStudentRepository
     {
-        private readonly PlannerDbContext _context;
+        private readonly PlannerServerContext _context;
         private readonly ILogger<StudentRepository> _logger;
 
-        public StudentRepository(PlannerDbContext context, ILogger<StudentRepository> logger)
+        public StudentRepository(PlannerServerContext context, ILogger<StudentRepository> logger)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));

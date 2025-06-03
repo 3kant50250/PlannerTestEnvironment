@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{126F0CD4-089
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlannerTests", "src\PlannerTests\PlannerTests.csproj", "{400BBCE6-AFD4-40EC-AFD7-047ACBCD605D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sql", "sql", "{4042AA4A-5870-41FD-9EFF-5E18A54D2FE0}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "db", "db", "{4042AA4A-5870-41FD-9EFF-5E18A54D2FE0}"
 	ProjectSection(SolutionItems) = preProject
 		init.sql = init.sql
 	EndProjectSection
@@ -15,7 +15,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BE70B51F-B151-484B-BEE8-F5006E924B63}"
 	ProjectSection(SolutionItems) = preProject
 		docker-compose.yml = docker-compose.yml
-		wait-for-db.sh = wait-for-db.sh
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{5B2C5D36-52B9-499B-8E5F-30D74C1C14B3}"

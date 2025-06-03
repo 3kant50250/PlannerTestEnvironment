@@ -1,18 +1,15 @@
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-WORKDIR /app
-EXPOSE 5000
+# Dockerfile inside src/PlannerServer
 
+# Use SDK to build the project
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
-COPY ["src/PlannerServer/PlannerServer.csproj", "src/PlannerServer/"]
-RUN dotnet restore "src/PlannerServer/PlannerServer.csproj"
-COPY . .
-WORKDIR "/src/src/PlannerServer"
-RUN dotnet publish -c Release -o /app/publish
+COPY . ./
+RUN dotnet restore PlannerServer.csproj
+RUN dotnet publish PlannerServer.csproj -c Release -o /app/publish
 
-FROM base AS final
+# Use runtime image
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
 COPY --from=build /app/publish .
-COPY wait-for-db.sh .
-RUN chmod +x wait-for-db.sh
-ENTRYPOINT ["./wait-for-db.sh"]
+EXPOSE 80
+ENTRYPOINT ["dotnet", "PlannerServer.dll"]

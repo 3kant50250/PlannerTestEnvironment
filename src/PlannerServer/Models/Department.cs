@@ -1,5 +1,4 @@
-﻿using PlannerServer.Model;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace PlannerServer.Models
 {

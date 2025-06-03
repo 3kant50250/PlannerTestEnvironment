@@ -1,57 +1,16 @@
 services:
-  sqlserver:
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: sqlserver
+  server:
+    build: ./src/PlannerServer
+    container_name: api-server
     environment:
-      SA_PASSWORD: "Your_password123"
-      ACCEPT_EULA: "Y"
+      ConnectionStrings__DefaultConnection: "Server=host.docker.internal,1433;Database=PlannerDb;User Id=sa;Password=Your_password123;TrustServerCertificate=True;"
     ports:
-      - "1433:1433"
-    #volumes:
-    #  - mssql-data:/var/opt/mssql
-    #  - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql
-    networks:
-      - planner-net
+      - "5000:80"
 
-  sqlready:
-    image: mcr.microsoft.com/mssql-tools
+  client:
+    build: ./src/PlannerClient
+    container_name: blazor-client
     depends_on:
-      - sqlserver
-    entrypoint: |
-      bash -c "echo 'Waiting for SQL Server to accept connections...';
-        for i in $(seq 1 30); do
-          /opt/mssql-tools/bin/sqlcmd -S sqlserver -U sa -P 'Your_password123' -Q 'SELECT 1' && exit 0
-          echo 'SQL not ready, retrying ('$i')...' && sleep 5
-        done
-        echo 'SQL Server did not become ready in time.' && exit 1"     
-
-    networks:
-      - planner-net
-
-  plannerclient:
-    build:
-      context: .
-      dockerfile: src/PlannerClient/Dockerfile
+      - server
     ports:
-      - "8080:8080"
-    networks:
-      - planner-net
-
-  plannerserver:
-    build:
-      context: .
-      dockerfile: src/PlannerServer/Dockerfile
-    ports:
-      - "5000:8080"
-    depends_on:
-      - sqlserver
-      - sqlready
-    networks:
-      - planner-net
-
-volumes:
-  mssql-data:
-
-networks:
-  planner-net:
-    driver: bridge
+      - "5001:80"

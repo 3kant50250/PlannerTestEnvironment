@@ -1,16 +1,13 @@
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-WORKDIR /app
-EXPOSE 8080
+# Dockerfile inside src/PlannerClient
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
-COPY ["src/PlannerClient/PlannerClient.csproj", "src/PlannerClient/"]
-RUN dotnet restore "src/PlannerClient/PlannerClient.csproj"
-COPY . .
-WORKDIR "/src/src/PlannerClient"
-RUN dotnet publish -c Release -o /app/publish
+COPY . ./
+RUN dotnet restore PlannerClient.csproj
+RUN dotnet publish PlannerClient.csproj -c Release -o /app/publish
 
-FROM base AS final
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
 COPY --from=build /app/publish .
+EXPOSE 80
 ENTRYPOINT ["dotnet", "PlannerClient.dll"]

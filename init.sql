@@ -1,19 +1,12 @@
-IF DB_ID('TestDb') IS NULL
-BEGIN
-    CREATE DATABASE TestDb;
-END
+CREATE DATABASE TestDb;
 GO
 
 USE TestDb;
 GO
 
-CREATE TABLE Users (
+CREATE TABLE People (
     Id INT PRIMARY KEY IDENTITY,
-    Name NVARCHAR(100),
-    Email NVARCHAR(100)
+    Name NVARCHAR(100)
 );
-GO
 
-INSERT INTO Users (Name, Email)
-VALUES ('Alice', 'alice@example.com'), ('Bob', 'bob@example.com');
-GO
+INSERT INTO People (Name) VALUES ('Alice'), ('Bob');

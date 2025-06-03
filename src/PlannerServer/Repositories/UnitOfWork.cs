@@ -5,7 +5,7 @@ namespace PlannerServer.Repositories
 {
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
-        private readonly PlannerDbContext _context;
+        private readonly PlannerServerContext _context;
 
         // Loggers
         private readonly ILogger<UnitOfWork> _logger;
@@ -14,7 +14,7 @@ namespace PlannerServer.Repositories
         // Repositories
         private readonly IStudentRepository _studentRepository;
 
-        public UnitOfWork(PlannerDbContext context,
+        public UnitOfWork(PlannerServerContext context,
             ILogger<UnitOfWork> logger,
             ILogger<StudentRepository> studentRepositoryLogger)
         {

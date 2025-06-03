@@ -10,6 +10,11 @@ builder.Services.AddHttpClient("PlannerApi", client =>
     client.BaseAddress = new Uri("http://plannerserver:80"); // Name from docker-compose
 });
 
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.ListenAnyIP(80);
+});
+
 
 var app = builder.Build();
 

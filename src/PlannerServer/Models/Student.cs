@@ -7,12 +7,12 @@ namespace PlannerServer.Models
     {
         public Student()
         {
-            FormativeEvaluations = new HashSet<FormativeEvaluation>();
-            SummativeEvaluations = new HashSet<SummativeEvaluation>();
-            TeamStudents = new HashSet<TeamStudent>();
-            DayPlans = new HashSet<DayPlan>();
-            WeekPlans = new HashSet<WeekPlan>();
-            PlannedActivities = new HashSet<PlannedActivity>();
+            //FormativeEvaluations = new HashSet<FormativeEvaluation>();
+            //SummativeEvaluations = new HashSet<SummativeEvaluation>();
+            //TeamStudents = new HashSet<TeamStudent>();
+            //DayPlans = new HashSet<DayPlan>();
+            //WeekPlans = new HashSet<WeekPlan>();
+            //PlannedActivities = new HashSet<PlannedActivity>();
         }
 
         public int StudentId { get; set; }
@@ -48,19 +48,19 @@ namespace PlannerServer.Models
 
         public virtual Department Department { get; set; }
 
-        public virtual ICollection<FormativeEvaluation> FormativeEvaluations { get; set; }
+        //public virtual ICollection<FormativeEvaluation> FormativeEvaluations { get; set; }
 
         public virtual Municipality Municipality { get; set; }
 
-        public virtual ICollection<SummativeEvaluation> SummativeEvaluations { get; set; }
+        //public virtual ICollection<SummativeEvaluation> SummativeEvaluations { get; set; }
 
-        public virtual ICollection<DayPlan> DayPlans { get; set; }
+        //public virtual ICollection<DayPlan> DayPlans { get; set; }
 
-        public virtual ICollection<WeekPlan> WeekPlans { get; set; }
+        //public virtual ICollection<WeekPlan> WeekPlans { get; set; }
 
-        public virtual ICollection<TeamStudent> TeamStudents { get; set; }
+        //public virtual ICollection<TeamStudent> TeamStudents { get; set; }
 
-        public virtual ICollection<PlannedActivity> PlannedActivities { get; set; }
+        //public virtual ICollection<PlannedActivity> PlannedActivities { get; set; }
         public virtual ContactInformation? ContactInformation { get; set; }
         public virtual ICollection<StudentEnrollment>? StudentEnrollments { get; set; }
         public virtual ICollection<StudentGraduation>? StudentGraduations { get; set; }
