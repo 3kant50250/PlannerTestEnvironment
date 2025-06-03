@@ -8,6 +8,7 @@ namespace PlannerServer.Models
         {
             Students = new HashSet<Student>();
             Users = new HashSet<User>();
+            SchoolItems = new HashSet<SchoolItem>();
         }
 
         public int DepartmentId { get; set; }
@@ -21,7 +22,7 @@ namespace PlannerServer.Models
         public string City { get; set; }
 
         public virtual ICollection<Student> Students { get; set; }
-
         public virtual ICollection<User> Users { get; set; }
+        public virtual ICollection<SchoolItem> SchoolItems { get; set; }
     }
 }

@@ -10,23 +10,29 @@ namespace PlannerServer.Repositories
         // Loggers
         private readonly ILogger<UnitOfWork> _logger;
         private readonly ILogger<StudentRepository> _studentRepositoryLogger;
+        private readonly ILogger<SchoolItemRepository> _schoolItemRepositoryLogger;
 
         // Repositories
         private readonly IStudentRepository _studentRepository;
+        private readonly ISchoolItemRepository _schoolItemRepository;
 
         public UnitOfWork(PlannerServerContext context,
             ILogger<UnitOfWork> logger,
-            ILogger<StudentRepository> studentRepositoryLogger)
+            ILogger<StudentRepository> studentRepositoryLogger,
+            ILogger<SchoolItemRepository> schoolItemRepositoryLogger)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _studentRepositoryLogger = studentRepositoryLogger ?? throw new ArgumentNullException(nameof(studentRepositoryLogger));
-
+            _schoolItemRepositoryLogger = schoolItemRepositoryLogger ?? throw new ArgumentNullException(nameof(schoolItemRepositoryLogger));
+            
             _studentRepository = new StudentRepository(_context, _studentRepositoryLogger);
+            _schoolItemRepository = new SchoolItemRepository(_context, _schoolItemRepositoryLogger);
         }
 
         // Property access for repositories
         public IStudentRepository StudentRepository => _studentRepository;
+        public ISchoolItemRepository SchoolItemRepository => _schoolItemRepository;
 
         // Complete unit of work and save changes asynchronously
         public async Task<bool> CompleteAsync(CancellationToken cancellationToken)

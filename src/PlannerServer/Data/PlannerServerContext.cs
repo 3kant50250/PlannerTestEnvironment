@@ -22,6 +22,7 @@ namespace PlannerServer.Data
         public virtual DbSet<GrantInformation> GrantInformations { get; set; }
         public virtual DbSet<GrantKind> GrantKinds { get; set; }
         public virtual DbSet<Municipality> Municipalities { get; set; }
+        public virtual DbSet<SchoolItem> SchoolItems { get; set; }
         public virtual DbSet<Student> Students { get; set; }
         public virtual DbSet<StudentEnrollment> StudentEnrollments { get; set; }
         public virtual DbSet<StudentGraduation> StudentGraduations { get; set; }
@@ -542,6 +543,41 @@ namespace PlannerServer.Data
                 entity.HasMany(e => e.Teams)
                       .WithMany(t => t.Users)
                       .UsingEntity(j => j.ToTable("UserTeams"));
+            });
+
+            modelBuilder.Entity<SchoolItem>(entity =>
+            {
+                entity.ToTable("SchoolItems");
+
+                // Primary Key
+                entity.HasKey(e => e.SchoolItemId);
+
+                entity.Property(e => e.SchoolItemId)
+                      .HasColumnName("SchoolItemId")
+                      .ValueGeneratedOnAdd();
+
+                // Properties
+                entity.Property(e => e.Name)
+                      .IsRequired()
+                      .HasMaxLength(100);
+
+                entity.Property(e => e.Description)
+                      .HasMaxLength(1000);
+
+                entity.Property(e => e.Number)
+                      .IsRequired()
+                      .HasMaxLength(50);
+
+                // Relationships
+                entity.HasOne(e => e.Department)
+                      .WithMany(d => d.SchoolItems)
+                      .HasForeignKey(e => e.DepartmentId)
+                      .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(e => e.Student)
+                      .WithMany(s => s.SchoolItems)
+                      .HasForeignKey(e => e.StudentId)
+                      .OnDelete(DeleteBehavior.SetNull);
             });
         }
     }

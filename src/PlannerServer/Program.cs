@@ -16,6 +16,7 @@ builder.Services.AddDbContext<PlannerServerContext>(options =>
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddScoped<IStudentService, StudentService>();
+builder.Services.AddScoped<ISchoolItemService, SchoolItemService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -23,7 +24,7 @@ builder.Services.AddSwaggerGen();
 
 builder.WebHost.ConfigureKestrel(options =>
 {
-    options.ListenAnyIP(80); // Important: listens on container port 80
+    options.ListenAnyIP(80);
 });
 
 var app = builder.Build();
@@ -31,13 +32,20 @@ var app = builder.Build();
 // Add seed data
 using (var scope = app.Services.CreateScope())
 {
-    var db = scope.ServiceProvider.GetRequiredService<PlannerServerContext>();
+    var services = scope.ServiceProvider;
+    var logger = services.GetRequiredService<ILogger<Program>>();
+    var context = services.GetRequiredService<PlannerServerContext>();
 
-    db.Database.EnsureDeleted();
-    db.Database.EnsureCreated(); // or db.Database.Migrate(); if using migrations
+    logger.LogInformation("Resetting and seeding the database...");
 
-    DbSeeder.Seed(db); // Your custom method to add data if necessary
+    //  Reset database
+    context.Database.EnsureDeleted();
+    context.Database.EnsureCreated();
+
+    //  Seed fresh data
+    await DbSeeder.SeedAsync(context, logger);
 }
+
 
 app.UseSwagger();
 app.UseSwaggerUI();
