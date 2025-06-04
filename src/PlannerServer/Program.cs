@@ -27,6 +27,22 @@ builder.WebHost.ConfigureKestrel(options =>
     options.ListenAnyIP(80);
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowBlazorClient", policy =>
+    {
+        policy.WithOrigins("http://plannerstestenvironment-client:5001")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
+builder.Services.AddHttpClient("PlannerApi", client =>
+{
+    client.BaseAddress = new Uri("http://plannerstestenvironment-server:5000/");
+});
+
+
 var app = builder.Build();
 
 // Add seed data
@@ -52,5 +68,6 @@ app.UseSwaggerUI();
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
+app.UseCors("AllowBlazorClient");
 
 app.Run();

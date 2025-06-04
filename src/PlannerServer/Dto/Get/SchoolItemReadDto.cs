@@ -8,7 +8,6 @@
         public string Number { get; set; }
         public int DepartmentId { get; set; }
         public int? StudentId { get; set; }
-
         public string? DepartmentName { get; set; }
         public string? StudentName { get; set; }
     }

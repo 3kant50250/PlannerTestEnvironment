@@ -61,7 +61,9 @@ namespace PlannerServer.Repositories
             try
             {
                 var schoolItems = await _context.SchoolItems
-                    .ToListAsync(cancellationToken);
+                        .Include(i => i.Student)
+                        .Include(i => i.Department)
+                        .ToListAsync(cancellationToken);
 
                 _logger.LogInformation("Successfully retrieved {SchoolItemCount} school items.", schoolItems.Count);
                 return schoolItems;

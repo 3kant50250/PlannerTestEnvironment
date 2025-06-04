@@ -47,7 +47,9 @@ namespace PlannerServer.Controllers
                     Description = item.Description,
                     Number = item.Number,
                     DepartmentId = item.DepartmentId,
-                    StudentId = item.StudentId
+                    StudentId = item.StudentId,
+                    DepartmentName = item.Department.Name,
+                    StudentName = item.Student?.Name
                 });
 
                 _logger.LogInformation("Successfully fetched items.");

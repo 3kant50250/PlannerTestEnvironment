@@ -1,0 +1,67 @@
+﻿@page "/SchoolItems"
+@model SchoolItems.IndexModel
+@{
+    ViewData["Title"] = "School Items";
+}
+
+<h1>School Items</h1>
+
+@if (Model.Items == null)
+{
+    <p><em>Loading failed or no items available.</em></p>
+}
+else if (!Model.Items.Any())
+{
+    <p><em>No school items found.</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Number</th>
+                <th>Description</th>
+                <th>Assigned To</th>
+                <th>Department</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Number</td>
+                    <td>@item.Description</td>
+                    <td>
+                        @if (item.StudentName == null)
+                        {
+                            <form method="post" asp-page-handler="Assign">
+                                <select name="StudentId" required>
+                                    <option disabled selected value="">-- Select student --</option>
+                                    @foreach (var student in Model.Students.Where(s => s.DepartmentId == item.DepartmentId))
+                                    {
+                                        <option value="@student.StudentId">@student.Name</option>
+                                    }
+                                </select>
+
+                                <input type="hidden" name="ItemId" value="@item.SchoolItemId" />
+                                <button type="submit" class="btn btn-sm btn-primary">Assign</button>
+                            </form>
+                        }
+                        else
+                        {
+                            @item.StudentName
+                            <form method="post" asp-page-handler="Unassign" style="display:inline">
+                                <input type="hidden" name="ItemId" value="@item.SchoolItemId" />
+                                <button type="submit" class="btn btn-sm btn-danger">Unassign</button>
+                            </form>
+                        }
+                    </td>
+
+                    <td>@(item.DepartmentName ?? "No department")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
